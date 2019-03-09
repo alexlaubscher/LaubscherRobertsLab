@@ -3,6 +3,16 @@
 * Matrix Multiplication
 */
 
+
+
+
+/* THIS WAS MY FIRST ATTEMPT AT THIS. IT DOES NOT WORK */
+
+
+
+
+
+
 #include <stdio.h>
 #define SIZE 1024
 
