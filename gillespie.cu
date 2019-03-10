@@ -60,6 +60,7 @@ int main(void) {
 
         // Increment the counter
         counter++;
+        printf("Through the loop");
     }
 
     // End the time and convert to sec
