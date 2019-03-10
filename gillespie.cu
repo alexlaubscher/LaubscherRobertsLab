@@ -31,7 +31,7 @@ int main(void) {
 
     // Allocating memory for the random numbers
     urn = (int *)malloc(SIZE * sizeof(int));
-    d_urn = cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
+    cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
@@ -50,9 +50,9 @@ int main(void) {
 
         // Update populations based on second urn
         if (sample < birth) {
-            y1 += 1;
+            pop += 1;
         } else {
-            y1 -= 1;
+            pop -= 1;
         }
 
         // Update the time step
@@ -64,9 +64,9 @@ int main(void) {
 
     // End the time and convert to sec
     clock_t end = clock();
-    double time = (double) (end - start) / CLOCKS_PER_SEC * 1000.0;
+    double timer = (double) (end - start) / CLOCKS_PER_SEC * 1000.0;
 
     // Calculate the reactions per sec
-     double rate = counter / time;
+     double rate = counter / timer;
     printf("%d", rate);
 }
