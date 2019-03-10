@@ -68,5 +68,5 @@ int main(void) {
 
     // Calculate the reactions per sec
      double rate = counter / timer;
-    printf("%d", rate);
+    printf("%f", rate);
 }
