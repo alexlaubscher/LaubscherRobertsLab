@@ -10,17 +10,24 @@ int main(void) {
     // Starting the timer
     clock_t start = clock();
 
-    // Initializing variables
+    // Initializing pointers
     int *urn;
     int *d_urn;
-    int count;
+
+    // Initializing variables for the while loop
+    int counter;
+    int birth;
+    int death;
+    int total;
+    int tau;
+    int sample;
 
     // Initial population
     int pop = 0;
 
     // Initializing time
-    time = 0;
-    maxTime = 1000;
+    int time = 0;
+    int maxTime = 1000;
 
     // Allocating memory for the random numbers
     urn = (int *)malloc(SIZE * sizeof(int));
