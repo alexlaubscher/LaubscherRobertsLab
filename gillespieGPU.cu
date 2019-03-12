@@ -41,7 +41,7 @@ int main(void) {
 
     // Move the array over to the GPU
     cudaMemcpy(d_urn, urn, allocSize, cudaMemcpyHostToDevice);
-    
+
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
         // Setting the propensity of the rxn
@@ -55,7 +55,7 @@ int main(void) {
         int check = (int) counter % 512;
 
         if (check == 0) {
-            genUrn<<<1, SIZE>>>(d_urn);
+            genUrn<<<1, allocSize>>>(d_urn);
             cudaMemcpy(urn, d_urn, allocSize, cudaMemcpyDeviceToHost);
         }
 
