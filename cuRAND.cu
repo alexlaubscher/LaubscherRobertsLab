@@ -4,9 +4,9 @@
 */
 
 #include <curand.h>
-#include <curand_kernel.h>
+#include <cuda.h>
 #include <stdio.h>
-#include <time.h>
+#include <stdlib.h>
 
 int main() {
     // Initialize variables
