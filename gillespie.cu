@@ -20,7 +20,7 @@ int main(void) {
     double sample;
 
     // Initial population
-    double pop = 0;
+    int pop = 0;
 
     // Initializing time
     double time = 0;
