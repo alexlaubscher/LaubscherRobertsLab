@@ -49,7 +49,7 @@ int main(void) {
         total = birth + death;
 
         // Need to cast the double
-        int check = counter % 512
+        int check = (int) counter % 512;
 
         if (check == 0) {
             genUrn<<<1, SIZE>>>(d_urn);
