@@ -8,13 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CURAND_CALL(x) do { if((x)!=CURAND_STATUS_SUCCESS) { \
-    printf("Error at %s:%d\n",__FILE__,__LINE__);\
-    return EXIT_FAILURE;}} while(0)
-
 int main() {
     // Initialize variables
-    int count = 1000;
+    int count = 10000;
     int i;
     curandGenerator_t gen;
     float *devURN;
@@ -29,7 +25,7 @@ int main() {
     cudaMalloc((void **) &devURN, count*sizeof(float));
 
     // Create the generator
-    CURAND_CALL(curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT));
+    curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
 
     // Set the seed
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);

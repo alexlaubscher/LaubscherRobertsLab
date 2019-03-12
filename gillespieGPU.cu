@@ -84,13 +84,13 @@ int main(void) {
 
     // End the time and convert to sec
     clock_t end = clock();
-    int timer = (end - start) / CLOCKS_PER_SEC;
+    double timer = (end - start) / CLOCKS_PER_SEC;
 
     //Calculate the reactions per sec
     double rate = counter / timer;
     printf("Population: %f\n", pop);
     printf("Counter: %f\n", counter);
-    printf("Timer: %d\n", timer);
+    printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 
     free(urn);
