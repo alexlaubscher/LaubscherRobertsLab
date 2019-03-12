@@ -25,7 +25,7 @@ int main() {
     cudaMalloc((void **) &devURN, count*sizeof(float));
 
     // Create the generator
-    curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEAULT);
+    curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
 
     // Set the seed
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);
@@ -47,7 +47,7 @@ int main() {
     printf("GPU time: %f\n", timeGPU);
     printf("CPU time: %f\n", timeCPU);
 
-    cudaDestroyGenerator(gen);
+    curandDestroyGenerator(gen);
     cudaFree(devURN);
     free(cpuURN);
     free(hostURN);
