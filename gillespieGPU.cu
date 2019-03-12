@@ -3,12 +3,14 @@
 * Gillespie Algorithm
 */
 
+#include <curand.h>
+#include <curand_kernel.h>
 #include <stdio.h>
 #include <time.h>
 #define SIZE 1024
 
 __device__ void genUrn(double *urn) {
-    urn[threadIdx.x] = (double) rand() / (RAND_MAX);
+    urn[threadIdx.x] = (double) curand() / (RAND_MAX);
 }
 
 int main(void) {
@@ -21,7 +23,6 @@ int main(void) {
 
     // Initializing variables for the while loop
     double counter;
-    int birth;
     int death;
     int total;
     double tau;
@@ -42,10 +43,12 @@ int main(void) {
     // Move the array over to the GPU
     cudaMemcpy(d_urn, urn, allocSize, cudaMemcpyHostToDevice);
 
+    // Can be outside cuz it never changes
+    int birth = 1000;
+
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
         // Setting the propensity of the rxn
-        birth = 1000;
         death = pop;
 
         // Sum over the propensities
