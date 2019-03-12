@@ -11,6 +11,10 @@ int main(void) {
     // Starting the timer
     clock_t start = clock();
 
+    // Initializing pointers
+    // int *urn;
+    // int *d_urn;
+
     // Initializing variables for the while loop
     double counter;
     int birth;
@@ -26,12 +30,15 @@ int main(void) {
     double time = 0;
     double maxTime = 100000;
 
-    // Moved this outside because its going to be constant
-    birth = 1000;
-    death = *pop;
+    // Allocating memory for the random numbers
+    // urn = (int *)malloc(SIZE * sizeof(int));
+    // cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
+        // Setting the propensity of the rxn
+        birth = 1000;
+        death = pop;
 
         // Sum over the propensities
         total = birth + death;
