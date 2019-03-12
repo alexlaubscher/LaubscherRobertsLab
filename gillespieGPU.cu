@@ -7,13 +7,17 @@
 #include <time.h>
 #define SIZE 1024
 
+__device__ void genUrn() {
+    d_urn[threadIdx.x] = (double) rand() / (RAND_MAX);
+}
+
 int main(void) {
     // Starting the timer
     clock_t start = clock();
 
     // Initializing pointers
-    // int *urn;
-    // int *d_urn;
+    int *urn;
+    int *d_urn;
 
     // Initializing variables for the while loop
     double counter;
@@ -22,6 +26,7 @@ int main(void) {
     int total;
     double tau;
     double sample;
+    int allocSize = SIZE * sizeof(double);
 
     // Initial population
     double pop = 0;
@@ -31,8 +36,8 @@ int main(void) {
     double maxTime = 100000;
 
     // Allocating memory for the random numbers
-    // urn = (int *)malloc(SIZE * sizeof(int));
-    // cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
+    urn = (double *)malloc(allocSize);
+    cudaMalloc((void **) &d_urn, allocSize);
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
@@ -43,11 +48,18 @@ int main(void) {
         // Sum over the propensities
         total = birth + death;
 
+        if (counter % 512 == 0) {
+            genUrn<<<1, SIZE>>>();
+            cudaMemcpy(urn, d_urn, allocSize, cudaMemcpyDeviceToHost);
+        }
+
         // Calculate time step
-        tau = (1.0 / total) * log((double) rand() / (RAND_MAX));
+        tau = (1.0 / total) * log(urn[(counter % 512) * 2]);
 
         // Second random choice
-        sample = total * ((double) rand() / (RAND_MAX));
+        sample = total * (urn[(counter % 512) * 2 + 1]);
+
+
 
         // Update populations based on second urn
         if (sample < birth) {

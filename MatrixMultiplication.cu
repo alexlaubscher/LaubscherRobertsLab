@@ -38,7 +38,7 @@ __device__ void multiply(int *a, int *b, int *c, int *a_rows, int *a_cols,
 __device__ void sum(int *temp, int *c, int *b_rows) {
     int i = threadIdx.x;
     int index = i / b_rows;
-    c[index] += c[i];
+    d_c[index] += d_c[i];
 }
 
 int main(void) {

@@ -8,11 +8,8 @@
 #define SIZE 1024
 
 int main(void) {
-    // Starting the timer
-    clock_t time_elapsed = clock();
-
     // Initializing variables for the while loop
-    // double counter;
+    double counter;
     int total;
     double tau;
     double sample;
@@ -26,10 +23,13 @@ int main(void) {
 
     // Moved this outside because its going to be constant
     int birth = 1000;
-    
+
+    // Starting the timer
+    clock_t time_elapsed = clock();
+
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
-	
+
         // Sum over the propensities
         total = birth + pop;
 
@@ -50,7 +50,7 @@ int main(void) {
         time = time - tau;
 
         // Increment the counter
-        // counter++;
+        counter++;
     }
 
     // End the time and convert to sec
@@ -58,9 +58,9 @@ int main(void) {
     double timer = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
     // Calculate the reactions per sec
-    double rate = 200020751 / timer;
+    double rate = counter / timer;
     printf("Population: %d\n", pop);
-    // printf("Counter: %f\n", counter);
+    printf("Counter: %f\n", counter);
     printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 }
