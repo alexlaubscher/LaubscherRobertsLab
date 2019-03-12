@@ -4,6 +4,7 @@
 */
 
 #include <stdio.h>
+#include <time.h>
 #define SIZE 1024
 
 int main(void) {
@@ -15,19 +16,19 @@ int main(void) {
     int *d_urn;
 
     // Initializing variables for the while loop
-    int counter;
+    double counter;
     int birth;
     int death;
     int total;
-    int tau;
-    int sample;
+    double tau;
+    double sample;
 
     // Initial population
     int pop = 0;
 
     // Initializing time
-    int time = 0;
-    int maxTime = 1000;
+    double time = 0;
+    double maxTime = 1;
 
     // Allocating memory for the random numbers
     urn = (int *)malloc(SIZE * sizeof(int));
@@ -43,31 +44,31 @@ int main(void) {
         total = birth + death;
 
         // Calculate time step
-        tau = 1 / total * log(rand());
+        tau = (1.0 / total) * log((rand() % 10000) / 10000.0);
 
         // Second random choice
-        sample = total * rand();
+        sample = total * (rand() % 10000) / 10000.0;
 
         // Update populations based on second urn
         if (sample < birth) {
-            pop += 1;
+            pop = pop + 1;
         } else {
-            pop -= 1;
+            pop = pop - 1;
         }
 
         // Update the time step
         time = time - tau;
 
         // Increment the counter
-        counter++;
-        printf("Through the loop");
+        counter = counter + 1;
+	printf("%f -- %f\n", tau, sample);
     }
 
     // End the time and convert to sec
-    clock_t end = clock();
-    double timer = (double) (end - start) / CLOCKS_PER_SEC * 1000.0;
+    // clock_t end = clock();
+    // int timer = (end - start) / CLOCKS_PER_SEC * 1000.0;
 
     // Calculate the reactions per sec
-     double rate = counter / timer;
-    printf("%f", rate);
+    // double rate = counter / timer;
+    // printf("%d", timer);
 }
