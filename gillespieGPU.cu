@@ -39,6 +39,9 @@ int main(void) {
     urn = (double *)malloc(allocSize);
     cudaMalloc((void **) &d_urn, allocSize);
 
+    // Move the array over to the GPU
+    cudaMemcpy(d_urn, urn, allocSize, cudaMemcpyHostToDevice);
+    
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
         // Setting the propensity of the rxn
@@ -86,4 +89,7 @@ int main(void) {
     printf("Counter: %f\n", counter);
     printf("Timer: %d\n", timer);
     printf("Rate: %f\n", rate);
+
+    free(urn);
+    cudaFree(d_urn);
 }
