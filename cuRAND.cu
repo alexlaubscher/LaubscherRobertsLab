@@ -39,10 +39,16 @@ int main() {
     double timeGPU = (clock() - startGPU) / CLOCKS_PER_SEC;
 
     clock_t startCPU = clock();
-        for (i = 0; i < count; i++) {
-            cpuURN[i] = rand();
-        }
+
+    for (i = 0; i < count; i++) {
+        cpuURN[i] = rand();
+    }
+
     double timeCPU = (clock() - startCPU) / CLOCKS_PER_SEC;
+
+    for (i = 0; i < 10; i++) {
+        printf("GPU: %f CPU: &f\n", hostURN[i], cpuURN[i]);
+    }
 
     printf("GPU time: %f\n", timeGPU);
     printf("CPU time: %f\n", timeCPU);
