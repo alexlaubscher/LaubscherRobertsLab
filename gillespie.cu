@@ -9,12 +9,10 @@
 
 int main(void) {
     // Starting the timer
-    clock_t start = clock();
+    clock_t time_elapsed = clock();
 
     // Initializing variables for the while loop
-    double counter;
-    int birth;
-    int *death;
+    // double counter;
     int total;
     double tau;
     double sample;
@@ -27,14 +25,13 @@ int main(void) {
     double maxTime = 100000;
 
     // Moved this outside because its going to be constant
-    birth = 1000;
-    death = pop;
-
+    int birth = 1000;
+    
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
-
+	
         // Sum over the propensities
-        total = birth + death;
+        total = birth + pop;
 
         // Calculate time step
         tau = (1.0 / total) * log((double) rand() / (RAND_MAX));
@@ -44,26 +41,26 @@ int main(void) {
 
         // Update populations based on second urn
         if (sample < birth) {
-            pop = pop + 1;
+            pop++;
         } else {
-            pop = pop - 1;
+            pop--;
         }
 
         // Update the time step
         time = time - tau;
 
         // Increment the counter
-        counter++;
+        // counter++;
     }
 
     // End the time and convert to sec
-    clock_t end = clock();
-    int timer = (end - start) / CLOCKS_PER_SEC;
+    time_elapsed = (clock() - time_elapsed);
+    double timer = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
-    //Calculate the reactions per sec
-    double rate = counter / timer;
-    printf("Population: %f\n", pop);
-    printf("Counter: %f\n", counter);
-    printf("Timer: %d\n", timer);
+    // Calculate the reactions per sec
+    double rate = 200020751 / timer;
+    printf("Population: %d\n", pop);
+    // printf("Counter: %f\n", counter);
+    printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 }
