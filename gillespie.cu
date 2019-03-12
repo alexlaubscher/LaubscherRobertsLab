@@ -14,7 +14,7 @@ int main(void) {
     // Initializing variables for the while loop
     double counter;
     int birth;
-    int death;
+    int *death;
     int total;
     double tau;
     double sample;
@@ -28,7 +28,7 @@ int main(void) {
 
     // Moved this outside because its going to be constant
     birth = 1000;
-    death = *pop;
+    death = pop;
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
