@@ -95,4 +95,6 @@ int main(void) {
 
     free(urn);
     cudaFree(d_urn);
+
+    return 0;
 }
