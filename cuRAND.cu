@@ -18,11 +18,11 @@ int main() {
     float *cpuURN;
 
     // Allocate n floats on host
-    hostURN = (float *)calloc(n, sizeof(float));
-    cpuURN = (float*)calloc(n, sizeof(float));
+    hostURN = (float *)calloc(count, sizeof(float));
+    cpuURN = (float*)calloc(count, sizeof(float));
 
     // Allocate n floats on device
-    cudaMalloc((void **) &devURN, n*sizeof(float));
+    cudaMalloc((void **) &devURN, count*sizeof(float));
 
     // Create the generator
     curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEAULT);
@@ -32,10 +32,10 @@ int main() {
 
     clock_t startGPU = clock();
         // Generate the floats
-        curandGenerateUniform(gen, devURN, n);
+        curandGenerateUniform(gen, devURN, count);
 
         // Copy the numbers back to the device
-        cudaMemcpy(devURN, hostURN, n*sizeof(float), cudaMemcpyDeviceToHost);
+        cudaMemcpy(devURN, hostURN, count*sizeof(float), cudaMemcpyDeviceToHost);
     double timeGPU = (clock() - startGPU) / CLOCKS_PER_SEC;
 
     clock_t startCPU = clock();
@@ -46,4 +46,9 @@ int main() {
 
     printf("GPU time: %f\n", timeGPU);
     printf("CPU time: %f\n", timeCPU);
+
+    cudaDestroyGenerator(gen);
+    cudaFree(devURN);
+    free(cpuURN);
+    free(hostURN);
 }
