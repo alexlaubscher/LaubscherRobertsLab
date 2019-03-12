@@ -7,8 +7,8 @@
 #include <time.h>
 #define SIZE 1024
 
-__device__ void genUrn() {
-    d_urn[threadIdx.x] = (double) rand() / (RAND_MAX);
+__device__ void genUrn(double *urn) {
+    urn[threadIdx.x] = (double) rand() / (RAND_MAX);
 }
 
 int main(void) {
@@ -16,8 +16,8 @@ int main(void) {
     clock_t start = clock();
 
     // Initializing pointers
-    int *urn;
-    int *d_urn;
+    double *urn;
+    double *d_urn;
 
     // Initializing variables for the while loop
     double counter;
@@ -48,18 +48,19 @@ int main(void) {
         // Sum over the propensities
         total = birth + death;
 
-        if (counter % 512 == 0) {
-            genUrn<<<1, SIZE>>>();
+        // Need to cast the double
+        int check = counter % 512
+
+        if (check == 0) {
+            genUrn<<<1, SIZE>>>(d_urn);
             cudaMemcpy(urn, d_urn, allocSize, cudaMemcpyDeviceToHost);
         }
 
         // Calculate time step
-        tau = (1.0 / total) * log(urn[(counter % 512) * 2]);
+        tau = (1.0 / total) * log(urn[check * 2]);
 
         // Second random choice
-        sample = total * (urn[(counter % 512) * 2 + 1]);
-
-
+        sample = total * (urn[check * 2 + 1]);
 
         // Update populations based on second urn
         if (sample < birth) {
