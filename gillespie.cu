@@ -44,10 +44,11 @@ int main(void) {
         total = birth + death;
 
         // Calculate time step
-        tau = (1.0 / total) * log((rand() % 10000) / 10000.0);
-
+        // tau = (1.0 / total) * log((rand() % 10000) / 10000.0);
+        tau = rand() % 10000;
+        sample = rand();
         // Second random choice
-        sample = total * (rand() % 10000) / 10000.0;
+        // sample = total * (rand() % 10000) / 10000.0;
 
         // Update populations based on second urn
         if (sample < birth) {
