@@ -12,8 +12,8 @@ int main(void) {
     clock_t start = clock();
 
     // Initializing pointers
-    int *urn;
-    int *d_urn;
+    // int *urn;
+    // int *d_urn;
 
     // Initializing variables for the while loop
     double counter;
@@ -24,15 +24,15 @@ int main(void) {
     double sample;
 
     // Initial population
-    int pop = 0;
+    double pop = 0;
 
     // Initializing time
     double time = 0;
-    double maxTime = 1;
+    double maxTime = 100000;
 
     // Allocating memory for the random numbers
-    urn = (int *)malloc(SIZE * sizeof(int));
-    cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
+    // urn = (int *)malloc(SIZE * sizeof(int));
+    // cudaMalloc((void **) &d_urn, SIZE * sizeof(int));
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
@@ -44,11 +44,10 @@ int main(void) {
         total = birth + death;
 
         // Calculate time step
-        // tau = (1.0 / total) * log((rand() % 10000) / 10000.0);
-        tau = (rand() % 10000) / 10000.0;
-        sample = rand();
+        tau = (1.0 / total) * log((double) rand() / (RAND_MAX));
+        
         // Second random choice
-        // sample = total * (rand() % 10000) / 10000.0;
+        sample = total * ((double) rand() / (RAND_MAX));
 
         // Update populations based on second urn
         if (sample < birth) {
@@ -61,15 +60,17 @@ int main(void) {
         time = time - tau;
 
         // Increment the counter
-        counter = counter + 1;
-	printf("%f -- %f\n", tau, sample);
+        counter++;
     }
 
     // End the time and convert to sec
-    // clock_t end = clock();
-    // int timer = (end - start) / CLOCKS_PER_SEC * 1000.0;
+    clock_t end = clock();
+    int timer = (end - start) / CLOCKS_PER_SEC;
 
-    // Calculate the reactions per sec
-    // double rate = counter / timer;
-    // printf("%d", timer);
+    //Calculate the reactions per sec
+    double rate = counter / timer;
+    printf("Population: %f\n", pop);
+    printf("Counter: %f\n", counter);
+    printf("Timer: %d\n", timer);
+    printf("Rate: %f\n", rate);
 }
