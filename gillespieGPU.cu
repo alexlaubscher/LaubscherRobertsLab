@@ -12,11 +12,12 @@
 int main() {
 
     // Initializing variables for gillespie algorithm
-    double counter;
+    int counter;
     int death;
     int total;
     double tau;
     double sample;
+    int check;
 
     // Initialize variables for the GPU generator
     int count = 2500000;
@@ -37,7 +38,7 @@ int main() {
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);
 
     // Initial population
-    double pop = 0;
+    int pop = 0;
 
     // Initializing time
     double time = 0;
@@ -58,7 +59,7 @@ int main() {
         total = birth + death;
 
         // Need to cast the double
-        int check = (int) counter % (count / 2);
+        check = counter % (count / 2);
 
         if (check == 0) {
             // Generate the floats
@@ -96,7 +97,7 @@ int main() {
     //Calculate the reactions per sec
     double rate = counter / timer;
     printf("Population: %f\n", pop);
-    printf("Counter: %f\n", counter);
+    printf("Counter: %d\n", counter);
     printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 
