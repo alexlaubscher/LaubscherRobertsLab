@@ -35,7 +35,7 @@ int main() {
         curandGenerateUniform(gen, devURN, count);
 
         // Copy the numbers back to the device
-        cudaMemcpy(devURN, hostURN, count*sizeof(float), cudaMemcpyDeviceToHost);
+        cudaMemcpy(hostURN, devURN, count*sizeof(float), cudaMemcpyDeviceToHost);
     double timeGPU = (clock() - startGPU) / CLOCKS_PER_SEC;
 
     clock_t startCPU = clock();
