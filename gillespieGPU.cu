@@ -17,14 +17,15 @@ int main(void) {
     int total;
     double tau;
     double sample;
-    int allocSize = SIZE * sizeof(double);
 
     // Initialize variables for the GPU generator
     int count = 50000;
-    int i;
     curandGenerator_t gen;
     float *devURN;
     float *hostURN;
+
+    // Allocate n floats on host
+    hostURN = (float *)calloc(count, sizeof(float));
 
     // Allocate n floats on device
     cudaMalloc((void **) &devURN, count*sizeof(float));
@@ -99,8 +100,9 @@ int main(void) {
     printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 
-    free(urn);
-    cudaFree(d_urn);
+    curandDestroyGenerator(gen);
+    cudaFree(devURN);
+    free(hostURN);
 
     return 0;
 }
