@@ -91,7 +91,7 @@ int main(void) {
 
     // End the time and convert to sec
     time_elapsed = clock() - time_elapsed;
-    double timer = ((double) time_elapsed)) / CLOCKS_PER_SEC;
+    double timer = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
     //Calculate the reactions per sec
     double rate = counter / timer;
