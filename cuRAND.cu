@@ -31,11 +31,13 @@ int main() {
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);
 
     clock_t time_elapsed = clock();
-        // Generate the floats
-        curandGenerateUniform(gen, devURN, count);
+    
+    // Generate the floats
+    curandGenerateUniform(gen, devURN, count);
 
-        // Copy the numbers back to the device
-        cudaMemcpy(hostURN, devURN, count*sizeof(float), cudaMemcpyDeviceToHost);
+    // Copy the numbers back to the device
+    cudaMemcpy(hostURN, devURN, count*sizeof(float), cudaMemcpyDeviceToHost);
+
     time_elapsed = (clock() - time_elapsed);
     double GPU_time = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
