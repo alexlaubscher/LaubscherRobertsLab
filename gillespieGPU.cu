@@ -47,7 +47,7 @@ int main(void) {
     int birth = 1000;
 
     // Starting the timer
-    clock_t start = clock();
+    clock_t time_elapsed = clock();
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
@@ -90,8 +90,8 @@ int main(void) {
     }
 
     // End the time and convert to sec
-    clock_t end = clock();
-    double timer = (end - start) / CLOCKS_PER_SEC;
+    time_elapsed = clock() - time_elapsed;
+    double timer = ((double) time_elapsed)) / CLOCKS_PER_SEC;
 
     //Calculate the reactions per sec
     double rate = counter / timer;
