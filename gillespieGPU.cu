@@ -19,7 +19,7 @@ int main(void) {
     double sample;
 
     // Initialize variables for the GPU generator
-    int count = 50000;
+    int count = 2500000;
     curandGenerator_t gen;
     float *devURN;
     float *hostURN;
@@ -58,7 +58,7 @@ int main(void) {
         total = birth + death;
 
         // Need to cast the double
-        int check = (int) counter % count;
+        int check = (int) counter % (count / 2);
 
         if (check == 0) {
             // Generate the floats
