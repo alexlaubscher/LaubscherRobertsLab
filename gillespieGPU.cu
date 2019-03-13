@@ -1,15 +1,15 @@
 /*
 * Alex Laubscher
 * Gillespie Algorithm
+* Uses a GPU generator for the numbers
 */
 
 #include <curand.h>
-#include <curand_kernel.h>
 #include <stdio.h>
 #include <time.h>
 #define SIZE 1024
 
-int main(void) {
+int main() {
 
     // Initializing variables for gillespie algorithm
     double counter;

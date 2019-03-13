@@ -1,10 +1,10 @@
 /*
 * Alex Laubscher
 * Random Number Generation
+* Code used to understand the GPU generator
 */
 
 #include <curand.h>
-#include <cuda.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,7 +31,7 @@ int main() {
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);
 
     clock_t time_elapsed = clock();
-    
+
     // Generate the floats
     curandGenerateUniform(gen, devURN, count);
 
