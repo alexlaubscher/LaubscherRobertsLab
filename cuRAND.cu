@@ -10,7 +10,7 @@
 
 int main() {
     // Initialize variables
-    int count = 10000;
+    int count = 500000;
     int i;
     curandGenerator_t gen;
     float *devURN;
@@ -30,28 +30,30 @@ int main() {
     // Set the seed
     curandSetPseudoRandomGeneratorSeed(gen, 1234ULL);
 
-    clock_t startGPU = clock();
+    clock_t time_elapsed = clock();
         // Generate the floats
         curandGenerateUniform(gen, devURN, count);
 
         // Copy the numbers back to the device
         cudaMemcpy(hostURN, devURN, count*sizeof(float), cudaMemcpyDeviceToHost);
-    double timeGPU = (clock() - startGPU) / CLOCKS_PER_SEC;
+    time_elapsed = (clock() - time_elapsed);
+    double GPU_time = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
-    clock_t startCPU = clock();
+    time_elapsed = clock();
 
     for (i = 0; i < count; i++) {
         cpuURN[i] = rand();
     }
 
-    double timeCPU = (clock() - startCPU) / CLOCKS_PER_SEC;
+    time_elapsed = (clock() - time_elapsed);
+    double CPU_time = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
     for (i = 0; i < 10; i++) {
-        printf("GPU: %f CPU: &f\n", hostURN[i], cpuURN[i]);
+        printf("GPU: %f CPU: %f\n", hostURN[i], cpuURN[i]);
     }
 
-    printf("GPU time: %f\n", timeGPU);
-    printf("CPU time: %f\n", timeCPU);
+    printf("GPU time: %f\n", GPU_time);
+    printf("CPU time: %f\n", CPU_time);
 
     curandDestroyGenerator(gen);
     cudaFree(devURN);
