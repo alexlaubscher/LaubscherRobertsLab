@@ -9,6 +9,8 @@
 #include <time.h>
 
 int main() {
+    // Starting the timer
+    clock_t time_elapsed = clock();
 
     // Initializing variables for gillespie algorithm
     int counter;
@@ -45,9 +47,6 @@ int main() {
 
     // Can be outside cuz it never changes
     int birth = 1000;
-
-    // Starting the timer
-    clock_t time_elapsed = clock();
 
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
