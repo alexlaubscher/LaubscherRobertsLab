@@ -7,7 +7,6 @@
 #include <curand.h>
 #include <stdio.h>
 #include <time.h>
-#define SIZE 1024
 
 int main() {
 
