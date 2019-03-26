@@ -85,6 +85,14 @@ __device__ void simulation() {
     time_elapsed = clock() - time_elapsed;
     double timer = ((double) time_elapsed) / CLOCKS_PER_SEC;
 
+    //Calculate the reactions per sec
+    double rate = counter / timer;
+    printf("Population: %f\n", pop);
+    printf("Counter: %d\n", counter);
+    printf("Timer: %f\n", timer);
+    printf("Rate: %f\n", rate);
+
+    // Free the memory
     curandDestroyGenerator(gen);
     cudaFree(tauURN);
     cudaFree(distURN);
@@ -93,7 +101,7 @@ __device__ void simulation() {
 int main() {
 
     // Run a single simulation on the device
-    simulation<<<1, 1>>>();
+    simulation<<<1, 1024>>>();
 
     return 0;
 }
