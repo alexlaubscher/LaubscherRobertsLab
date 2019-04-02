@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <time.h>
 
-__device__ void simulation() {
+__gloabl__ void simulation() {
 
     // Same initialization of variables
     int counter;
