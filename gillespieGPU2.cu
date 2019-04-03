@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <time.h>
 
-__gloabl__ void simulation() {
+__global__ void simulation(int count, float *tauURN, float *distURN, curandGenerator_t gen) {
 
     // Same initialization of variables
     int counter;
@@ -17,20 +17,7 @@ __gloabl__ void simulation() {
     double tau;
     double sample;
     int check;
-
-    // Variables for URN generation
-    int count  = 2500000;
-    curandGenerator_t gen;
-    float *tauURN;
-    float *distURN;
-
-    // Allocate space for the two random number arrays
-    cudaMalloc((void **) &tauURN, count*sizeof(float));
-    cudaMalloc((void **) &distURN, count*sizeof(float));
-
-    // Create the generator
-    curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
-
+ 
     // Initial population
     int pop = 0;
 
@@ -92,16 +79,25 @@ __gloabl__ void simulation() {
     printf("Timer: %f\n", timer);
     printf("Rate: %f\n", rate);
 
-    // Free the memory
-    curandDestroyGenerator(gen);
-    cudaFree(tauURN);
-    cudaFree(distURN);
 }
 
 int main() {
-
+    
+    // Create the generator
+    curandGenerator_t gen;
+    curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
+    
+    int count = 2500000;
+    float *tauURN;
+    float *distURN;
+    cudaMalloc((void **) &tauURN, count*sizeof(float));
+    cudaMalloc((void **) &distURN, count*sizeof(float));
+    
     // Run a single simulation on the device
-    simulation<<<1, 1024>>>();
-
+    simulation<<<1, 1024>>>(count, tauURN, distURN, gen);
+    
+    curandDestroyGenerator(gen);
+    cudaFree(tauURN);
+    cudaFree(distURN);
     return 0;
 }
