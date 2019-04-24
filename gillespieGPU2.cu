@@ -17,7 +17,7 @@ __global__ void simulation(int count, float *tauURN, float *distURN, curandGener
     double tau;
     double sample;
     int check;
- 
+
     // Initial population
     int pop = 0;
 
@@ -82,20 +82,31 @@ __global__ void simulation(int count, float *tauURN, float *distURN, curandGener
 }
 
 int main() {
-    
+    // Initialize streams
+    cudaStream_t stream1, stream2, stream3, stream4, stream5;
+    cudaStreamCreate(&stream1);
+    cudaStreamCreate(&stream2);
+    cudaStreamCreate(&stream3);
+    cudaStreamCreate(&stream4);
+    cudaStreamCreate(&stream5);
+
     // Create the generator
     curandGenerator_t gen;
     curandCreateGenerator(&gen, CURAND_RNG_PSEUDO_DEFAULT);
-    
+
     int count = 2500000;
     float *tauURN;
     float *distURN;
     cudaMalloc((void **) &tauURN, count*sizeof(float));
     cudaMalloc((void **) &distURN, count*sizeof(float));
-    
+
     // Run a single simulation on the device
-    simulation<<<1, 1024>>>(count, tauURN, distURN, gen);
-    
+    simulation<<<1, 1024, 0, stream1>>>(count, tauURN, distURN, gen);
+
+
+    // FREE HOSTS
+    cudaFreeHost(;alkdf;alkj);
+
     curandDestroyGenerator(gen);
     cudaFree(tauURN);
     cudaFree(distURN);

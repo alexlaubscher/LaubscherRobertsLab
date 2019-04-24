@@ -48,7 +48,7 @@ int main() {
 
     // Starting the timer
     clock_t time_elapsed = clock();
-    
+
     // Run the while loop over 100,000 simulation seconds
     while (time < maxTime) {
         // Setting the propensity of the rxn
