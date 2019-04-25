@@ -30,10 +30,10 @@ __global__ void VectorAdd(int *a, int *b, int c, int n) {
 int main() {
     float *dev_a, *dev_b, *dev_c, *dev_d;
 
-    int *a = (float *)calloc(SIZE, sizeof(float));
-    int *b = (float *)calloc(SIZE, sizeof(float));
-    int *c = (float *)calloc(SIZE, sizeof(float));
-    int *d = (float *)calloc(SIZE, sizeof(float));
+    float *a = (float *)calloc(SIZE, sizeof(float));
+    float *b = (float *)calloc(SIZE, sizeof(float));
+    float *c = (float *)calloc(SIZE, sizeof(float));
+    float *d = (float *)calloc(SIZE, sizeof(float));
 
     cudaMalloc((void **) &dev_a, SIZE*sizeof(float));
     cudaMalloc((void **) &dev_b, SIZE*sizeof(float));
