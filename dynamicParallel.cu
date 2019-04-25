@@ -16,7 +16,7 @@ __global__ void kidKernel(void) {
 
 __global__ void VectorAdd(float *a, float *b, float *c, int n) {
     printf("Inside the kernel");
-    int i = threadIdx.X;
+    int i = threadIdx.x;
 
     if (i < n)
         c[i] = a[i] + b[i];
