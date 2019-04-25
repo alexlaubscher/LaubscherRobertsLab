@@ -14,7 +14,7 @@ __global__ void kidKernel(void) {
     }
 }
 
-__global__ void VectorAdd(int *a, int *b, int c, int n) {
+__global__ void VectorAdd(float *a, float *b, float *c, int n) {
     printf("Inside the kernel");
     int i = threadIdx.X;
 
@@ -23,7 +23,6 @@ __global__ void VectorAdd(int *a, int *b, int c, int n) {
 
     kidKernel <<<1, 1>>> ();
 
-    cudaDeviceSychronize();
 }
 
 
@@ -48,7 +47,7 @@ int main() {
         b[i] = i;
     }
 
-    VectorAdd <<<1, SIZE>>> (dev_a, dev_b, dev_c, SIZE);
+    VectorAdd <<<1, SIZE>>> (&dev_a, &dev_b, &dev_c, SIZE);
 
     free(a), free(b);
     cudaFree(dev_a), cudaFree(dev_b), cudaFree(dev_c), cudaFree(dev_d);
