@@ -34,10 +34,10 @@ int main() {
     float *c = (float *)calloc(SIZE, sizeof(float));
     float *d = (float *)calloc(SIZE, sizeof(float));
 
-    cudaMalloc((void **) &dev_a, SIZE*sizeof(float));
-    cudaMalloc((void **) &dev_b, SIZE*sizeof(float));
-    cudaMalloc((void **) &dev_c, SIZE*sizeof(float));
-    cudaMalloc((void **) &dev_d, SIZE*sizeof(float));
+    cudaMalloc((void *) &dev_a, SIZE*sizeof(float));
+    cudaMalloc((void *) &dev_b, SIZE*sizeof(float));
+    cudaMalloc((void *) &dev_c, SIZE*sizeof(float));
+    cudaMalloc((void *) &dev_d, SIZE*sizeof(float));
 
     cudaMemcpy(dev_a, a, SIZE, cudaMemcpyHostToDevice);
     cudaMemcpy(dev_b, b, SIZE, cudaMemcpyHostToDevice);
