@@ -14,7 +14,7 @@ __global__ void kidKernel(void) {
     }
 }
 
-__global__ void VectorAdd(int *a, int *b, int n) {
+__global__ void VectorAdd(int *a, int *b, int c, int n) {
     printf("Inside the kernel");
     int i = threadIdx.X;
 
@@ -30,24 +30,25 @@ __global__ void VectorAdd(int *a, int *b, int n) {
 int main() {
     float *dev_a, *dev_b, *dev_c, *dev_d;
 
-    int* a = (float *)calloc(SIZE, sizeof(float));
-    int* b = (float *)calloc(SIZE, sizeof(float));
-    int* c = (float *)calloc(SIZE, sizeof(float));
-    int* d = (float *)calloc(SIZE, sizeof(float));
+    int *a = (float *)calloc(SIZE, sizeof(float));
+    int *b = (float *)calloc(SIZE, sizeof(float));
+    int *c = (float *)calloc(SIZE, sizeof(float));
+    int *d = (float *)calloc(SIZE, sizeof(float));
 
-    cudaMalloc((void **) &dev_a, count*sizeof(float));
-    cudaMalloc((void **) &dev_b, count*sizeof(float));
-    cudaMalloc((void **) &dev_c, count*sizeof(float));
-    cudaMalloc((void **) &dev_d, count*sizeof(float));
+    cudaMalloc((void **) &dev_a, SIZE*sizeof(float));
+    cudaMalloc((void **) &dev_b, SIZE*sizeof(float));
+    cudaMalloc((void **) &dev_c, SIZE*sizeof(float));
+    cudaMalloc((void **) &dev_d, SIZE*sizeof(float));
 
-    cudaMemcpy(d_a, a, SIZE, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b, SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_a, a, SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_b, b, SIZE, cudaMemcpyHostToDevice);
 
     for (int i = 0; i < SIZE; ++i) {
         a[i] = i;
         b[i] = i;
     }
 
+    VectorAdd <<<1, SIZE>>> (dev_a, dev_b, dev_c, SIZE);
 
     free(a), free(b);
     cudaFree(dev_a), cudaFree(dev_b), cudaFree(dev_c), cudaFree(dev_d);
