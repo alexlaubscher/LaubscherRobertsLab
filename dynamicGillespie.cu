@@ -126,7 +126,7 @@ int main() {
     cudaMalloc(&maxTime, sizeof(double));
     cudaMalloc(&birth, sizeof(int));
     cudaMalloc(&swap, sizeof(int));
-
+    printf("hi\n");
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count,
         pop, time, maxTime, birth, swap);
 
