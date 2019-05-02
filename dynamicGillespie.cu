@@ -32,7 +32,7 @@ __global__ void genLogURN(float *logURN, int *count) {
     }
 }
 
-__device__ void devMain(int *counter, int *death, int *total, double *tau,
+__global__ void devMain(int *counter, int *death, int *total, double *tau,
     double *sample, int *check, int *count, int *pop, double *time,
     double *maxTime, int *birth, float *normURN, float *logURN, float *normURN2,
     float *logURN2, int *swap) {
