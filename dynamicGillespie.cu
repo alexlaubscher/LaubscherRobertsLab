@@ -3,7 +3,7 @@
 * Gillespie with Dynamic Parallelism
 */
 
-#include <curand.h>
+#include <curand_kernel.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,7 +22,7 @@ __device__ void genURN(float *normURN, int count) {
     }
 }
 
-__device__ void genLogURN(float *logURN, int *count) {
+__device__ void genLogURN(float *logURN, int count) {
     int i = threadIdx.x;
 
     if (i < count) {
@@ -51,7 +51,7 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
     while(time < maxTime) {
         death = pop;
 
-        total = birth + death;
+        total = &birth + &death;
 
         check = counter % (count);
 
@@ -60,12 +60,12 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
 
         if (check == 0) {
             if (swap == 1) {
-                genURN<<<1, 512>>>(logURN2, swap, count);
-                genLogURN<<<1, 512>>>(normURN2, swap, count);
+                genURN<<<1, 512>>>(logURN2, swap, &count);
+                genLogURN<<<1, 512>>>(normURN2, swap, &count);
                 swap = 2;
             } else {
-                genURN<<<1, 512>>>(logURN, swap, count);
-                genLogURN<<<1, 512>>>(normURN, swap, count);
+                genURN<<<1, 512>>>(logURN, swap, &count);
+                genLogURN<<<1, 512>>>(normURN, swap, &count);
                 swap = 1;
             }
         }
