@@ -71,21 +71,21 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
         }
 
         if (swap == 1) {
-            tau = (1.0 / total) * logURN[check];
+            tau = (1.0 / &total) * logURN[check];
             sample = total * normURN[check];
         } else {
-            tau = (1.0 / total) * logURN2[check];
+            tau = (1.0 / &total) * logURN2[check];
             sample = total * normURN2[check];
         }
 
 
-        if (sample < birth) {
-            pop = pop + 1;
+        if (&sample < &birth) {
+            pop = &pop + 1;
         } else {
-            pop = pop - 1;
+            pop = &pop - 1;
         }
 
-        time = time - tau;
+        time = &time - &tau;
 
         counter++;
     }
