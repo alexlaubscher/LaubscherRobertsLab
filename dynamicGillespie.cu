@@ -49,11 +49,11 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
     birth = 1000;
 
     while(time < maxTime) {
-        death = *pop;
+        *death = *pop;
 
-        total = *birth + *death;
+        *total = *birth + *death;
 
-        check = *counter % (*count);
+        *check = *counter % (*count);
 
         genURN<<<1, 512>>>(logURN, count);
         genLogURN<<<1, 512>>>(normURN, count);
@@ -71,21 +71,21 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
         }
 
         if (*swap == 1) {
-            tau = (1.0 / &total) * logURN[check];
-            sample = total * normURN[check];
+            *tau = (1.0 / *total) * logURN[*check];
+            *sample = total * normURN[check];
         } else {
-            tau = (1.0 / &total) * logURN2[check];
-            sample = total * normURN2[check];
+            *tau = (1.0 / *total) * logURN2[*check];
+            *sample = *total * normURN2[*check];
         }
 
 
         if (*sample < *birth) {
-            pop = *pop + 1;
+            *pop = *pop + 1;
         } else {
-            pop = *pop - 1;
+            *pop = *pop - 1;
         }
 
-        time = *time - *tau;
+        *time = *time - *tau;
 
         *counter++;
     }
