@@ -34,8 +34,7 @@ __global__ void genLogURN(float *logURN, int *count) {
 
 __global__ void devMain(int *counter, int *death, int *total, double *tau,
     double *sample, int *check, int *count, int *pop, double *time,
-    double *maxTime, int *birth, float *normURN, float *logURN, float *normURN2,
-    float *logURN2, int *swap) {
+    double *maxTime, int *birth, int *swap) {
 
     cudaMalloc((void **) &normURN, 250000*sizeof(float));
     cudaMalloc((void **) &logURN, 250000*sizeof(float));
@@ -124,7 +123,7 @@ int main() {
     cudaMalloc(&swap, sizeof(int));
 
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count,
-        pop, time, maxTime, birth, normURN, logURN, normURN2, logURN2, swap);
+        pop, time, maxTime, birth, swap);
 
     cudaFree(counter);
     cudaFree(death);
