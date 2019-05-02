@@ -72,7 +72,7 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
 
         if (*swap == 1) {
             *tau = (1.0 / *total) * logURN[*check];
-            *sample = *total * normURN[check];
+            *sample = *total * normURN[*check];
         } else {
             *tau = (1.0 / *total) * logURN2[*check];
             *sample = *total * normURN2[*check];
