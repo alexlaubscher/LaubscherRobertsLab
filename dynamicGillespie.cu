@@ -12,7 +12,7 @@ __device__ float *logURN;
 __device__ float *normURN2;
 __device__ float *logURN2;
 
-__device__ void genURN(float *normURN, int count) {
+__device__ void genURN(float *normURN, int *count) {
     int i = threadIdx.x;
 
     if (i < count) {
@@ -22,7 +22,7 @@ __device__ void genURN(float *normURN, int count) {
     }
 }
 
-__device__ void genLogURN(float *logURN, int count) {
+__device__ void genLogURN(float *logURN, int *count) {
     int i = threadIdx.x;
 
     if (i < count) {
@@ -58,19 +58,19 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
         genURN<<<1, 512>>>(logURN, swap, count);
         genLogURN<<<1, 512>>>(normURN, swap, count);
 
-        if (check == 0) {
-            if (swap == 1) {
-                genURN<<<1, 512>>>(logURN2, swap, &count);
-                genLogURN<<<1, 512>>>(normURN2, swap, &count);
+        if (&check == 0) {
+            if (&swap == 1) {
+                genURN<<<1, 512>>>(logURN2, count);
+                genLogURN<<<1, 512>>>(normURN2, count);
                 swap = 2;
             } else {
-                genURN<<<1, 512>>>(logURN, swap, &count);
-                genLogURN<<<1, 512>>>(normURN, swap, &count);
+                genURN<<<1, 512>>>(logURN, count);
+                genLogURN<<<1, 512>>>(normURN, count);
                 swap = 1;
             }
         }
 
-        if (swap == 1) {
+        if (&swap == 1) {
             tau = (1.0 / &total) * logURN[check];
             sample = total * normURN[check];
         } else {
