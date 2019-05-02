@@ -58,8 +58,8 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
         genURN<<<1, 512>>>(logURN, count);
         genLogURN<<<1, 512>>>(normURN, count);
 
-        if (check& == 0) {
-            if (swap& == 1) {
+        if (*check == 0) {
+            if (*swap == 1) {
                 genURN<<<1, 512>>>(logURN2, count);
                 genLogURN<<<1, 512>>>(normURN2, count);
                 swap = 2;
