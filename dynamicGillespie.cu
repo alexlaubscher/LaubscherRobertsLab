@@ -7,7 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-__device__ void genURN(float *normURN, int *swap, int *count) {
+__device__ float *normURN;
+__device__ float *logURN;
+__device__ float *normURN2;
+__device__ float *logURN2;
+
+__device__ void genURN(float *normURN, int *count) {
     int i = threadIdx.x;
 
     if (i < count) {
@@ -17,7 +22,7 @@ __device__ void genURN(float *normURN, int *swap, int *count) {
     }
 }
 
-__device__ void genLogURN(float *logURN, int *swap, int *count) {
+__device__ void genLogURN(float *logURN, int *count) {
     int i = threadIdx.x;
 
     if (i < count) {
@@ -31,6 +36,12 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
     double *sample, int *check, int *count, int *pop, double *time,
     double *maxTime, int *birth, float *normURN, float *logURN, float *normURN2,
     float *logURN2, int *swap) {
+
+    cudaMalloc((void **) &normURN, 250000*sizeof(float));
+    cudaMalloc((void **) &logURN, 250000*sizeof(float));
+    cudaMalloc((void **) &normURN2, 250000*sizeof(float));
+    cudaMalloc((void **) &logURN2, 250000*sizeof(float));
+
     count = 250000;
     pop = 0;
     time = 0;
@@ -44,14 +55,29 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
 
         check = counter % (count);
 
+        genURN<<<1, 512>>>(logURN, swap, count);
+        genLogURN<<<1, 512>>>(normURN, swap, count);
+
         if (check == 0) {
-            genURN<<<1, 512>>>(swap, count);
-            genLogURN<<<1, 512>>>(swap, count);
+            if (swap == 1) {
+                genURN<<<1, 512>>>(logURN2, swap, count);
+                genLogURN<<<1, 512>>>(normURN2, swap, count);
+                swap = 2;
+            } else {
+                genURN<<<1, 512>>>(logURN, swap, count);
+                genLogURN<<<1, 512>>>(normURN, swap, count);
+                swap = 1;
+            }
         }
 
-        tau = (1.0 / total) * logURN[check];
+        if (swap == 1) {
+            tau = (1.0 / total) * logURN[check];
+            sample = total * normURN[check];
+        } else {
+            tau = (1.0 / total) * logURN2[check];
+            sample = total * normURN2[check];
+        }
 
-        sample = total * normURN[check];
 
         if (sample < birth) {
             pop = pop + 1;
@@ -63,6 +89,11 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
 
         counter++;
     }
+
+    cudaFree(normURN);
+    cudaFree(logURN);
+    cudaFree(normURN2);
+    cudaFree(logURN2);
 }
 
 int main() {
@@ -77,10 +108,6 @@ int main() {
     double *time;
     double *maxTime;
     int *birth;
-    float *normURN;
-    float *logURN;
-    float *normURN2;
-    float *logURN2;
     int *swap;
 
     cudaMalloc(&counter, sizeof(int));
@@ -94,10 +121,6 @@ int main() {
     cudaMalloc(&time, sizeof(double));
     cudaMalloc(&maxTime, sizeof(double));
     cudaMalloc(&birth, sizeof(int));
-    cudaMalloc((void **) &normURN, 250000*sizeof(float));
-    cudaMalloc((void **) &logURN, 250000*sizeof(float));
-    cudaMalloc((void **) &normURN2, 250000*sizeof(float));
-    cudaMalloc((void **) &logURN2, 250000*sizeof(float));
     cudaMalloc(&swap, sizeof(int));
 
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count
@@ -113,9 +136,5 @@ int main() {
     cudaFree(time);
     cudaFree(maxTime);
     cudaFree(birth);
-    cudaFree(normURN);
-    cudaFree(logURN);
-    cudaFree(normURN2);
-    cudaFree(logURN2);
     cudaFree(swap);
 }
