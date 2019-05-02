@@ -12,12 +12,12 @@ __device__ float *logURN;
 __device__ float *normURN2;
 __device__ float *logURN2;
 
-__device__ void genURN(float *normURN, int *count) {
+__device__ void genURN(float *normURN, int count) {
     int i = threadIdx.x;
 
     if (i < count) {
         curandState state;
-        curand_init(seed, i, 0, &state);
+        curand_init(clock64(), i, 0, &state);
         normURN[i] = curand_uniform(&state);
     }
 }
@@ -27,7 +27,7 @@ __device__ void genLogURN(float *logURN, int *count) {
 
     if (i < count) {
         curandState state;
-        curand_init(seed, i, 0, &state);
+        curand_init(clock64(), i, 0, &state);
         normURN[i] = log(curand_uniform(&state));
     }
 }
