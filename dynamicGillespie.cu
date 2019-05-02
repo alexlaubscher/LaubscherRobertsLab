@@ -55,11 +55,11 @@ __device__ void devMain(int *counter, int *death, int *total, double *tau,
 
         check = counter % (count);
 
-        genURN<<<1, 512>>>(logURN, swap, count);
-        genLogURN<<<1, 512>>>(normURN, swap, count);
+        genURN<<<1, 512>>>(logURN, count);
+        genLogURN<<<1, 512>>>(normURN, count);
 
-        if (&check == 0) {
-            if (&swap == 1) {
+        if (check& == 0) {
+            if (swap& == 1) {
                 genURN<<<1, 512>>>(logURN2, count);
                 genLogURN<<<1, 512>>>(normURN2, count);
                 swap = 2;
