@@ -100,7 +100,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     printf("Counter: %d\n", *counter);
 }
 
-int main() {
+int main(void) {
     int *counter;
     int *death;
     int *total;
