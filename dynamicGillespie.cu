@@ -44,7 +44,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     *count = 250000;
     *pop = 0;
     *time = 0;
-    *maxTime = 100000;
+    *maxTime = 10;
     *birth = 1000;
 
     while(time < maxTime) {
@@ -93,6 +93,9 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     cudaFree(logURN);
     cudaFree(normURN2);
     cudaFree(logURN2);
+
+    printf("Population: %f\n", *pop);
+    printf("Counter: %d\n", *counter);
 }
 
 int main() {
