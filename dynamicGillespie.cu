@@ -48,7 +48,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     *birth = 1000;
 
     while(time < maxTime) {
-        printf("%f < %f\n", *time, *maxTime);
+        printf("%f\n", counter);
         *death = *pop;
 
         *total = *birth + *death;
