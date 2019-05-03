@@ -86,7 +86,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
 
         *time = *time - *tau;
 
-        *counter++;
+        counter++;
     }
 
     printf("something is wrong here\n");
