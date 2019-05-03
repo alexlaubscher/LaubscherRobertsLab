@@ -12,7 +12,7 @@ test:
 	$(NVCC) -o test dynamicGillespie.o $(LIBDIRS) $(LIBS) $(CXXFLAGS)
 
 dynamicGillespie.o: dynamicGillespie.cu
-	$(NVCC) $(CUDAFLAGS)   dynamicGillespie.cu
+	$(NVCC) $(CUDAFLAGS) dynamicGillespie.cu
 
 clean:
 	rm -rf test *.o
