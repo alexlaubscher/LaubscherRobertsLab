@@ -13,7 +13,6 @@ __device__ float *normURN2;
 __device__ float *logURN2;
 
 __global__ void genURN(float *normURN, int *count) {
-    printf("hi\n");
     int i = threadIdx.x;
 
     if (i < *count) {
@@ -24,7 +23,6 @@ __global__ void genURN(float *normURN, int *count) {
 }
 
 __global__ void genLogURN(float *logURN, int *count) {
-    printf("hi2\n");
     int i = threadIdx.x;
 
     if (i < *count) {
