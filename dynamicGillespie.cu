@@ -127,7 +127,7 @@ int main(void) {
     cudaMalloc(&swap, sizeof(int));
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count,
         pop, time, maxTime, birth, swap);
-
+    printf("more prints\n");
     cudaFree(counter);
     cudaFree(death);
     cudaFree(total);
