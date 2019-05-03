@@ -9,7 +9,7 @@ LIBDIRS=-L/usr/local/lib
 all: test
 
 test:
-	$(CC) -o test dynamicGillespie.o $(LIBDIRS) $(LIBS) $(CXXFLAGS)
+	$(NVCC) -o test dynamicGillespie.o $(LIBDIRS) $(LIBS) $(CXXFLAGS)
 
 dynamicGillespie.o: dynamicGillespie.cu
 	$(NVCC) $(CUDAFLAGS)   dynamicGillespie.cu
