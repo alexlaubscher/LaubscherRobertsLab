@@ -55,7 +55,6 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
         *total = *birth + *death;
 
         *check = *counter % (*count);
-        printf("hello\n");
         genURN<<<1, 512>>>(logURN, count);
         genLogURN<<<1, 512>>>(normURN, count);
 
@@ -126,7 +125,6 @@ int main(void) {
     cudaMalloc(&maxTime, sizeof(double));
     cudaMalloc(&birth, sizeof(int));
     cudaMalloc(&swap, sizeof(int));
-    printf("hi\n");
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count,
         pop, time, maxTime, birth, swap);
 
