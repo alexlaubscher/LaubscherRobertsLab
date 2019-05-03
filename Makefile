@@ -1,7 +1,7 @@
 CC=g++
 NVCC=nvcc
-CXXFLAGS= -dc -arch=sm_35
-CUDAFLAGS= -std=c++11 -c -arch=sm_35
+CXXFLAGS= -std=c++11 -arch=sm_35
+CUDAFLAGS= -std=c++11 -dc -arch=sm_35
 LIBS= -lopenblas -lpthread -lcudart -lcublas
 LIBDIRS=-L/usr/local/lib
 
