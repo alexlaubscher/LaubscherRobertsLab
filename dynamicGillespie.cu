@@ -48,6 +48,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     *birth = 1000;
 
     while(time < maxTime) {
+        printf("inside\n");
         *death = *pop;
 
         *total = *birth + *death;
@@ -125,9 +126,10 @@ int main(void) {
     cudaMalloc(&maxTime, sizeof(double));
     cudaMalloc(&birth, sizeof(int));
     cudaMalloc(&swap, sizeof(int));
+
     devMain<<<1, 128>>>(counter, death, total, tau, sample, check, count,
         pop, time, maxTime, birth, swap);
-    printf("more prints\n");
+
     cudaFree(counter);
     cudaFree(death);
     cudaFree(total);
