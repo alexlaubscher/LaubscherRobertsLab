@@ -46,6 +46,7 @@ __global__ void devMain(int *counter, int *death, int *total, double *tau,
     *time = 0;
     *maxTime = 10;
     *birth = 1000;
+    *counter = 0;
 
     while(time < maxTime) {
         printf("%f\n", *counter);
